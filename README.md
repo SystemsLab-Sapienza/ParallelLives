@@ -3,7 +3,7 @@ Additional material for paper "The parallel lives of Autonomous Systems: ASN All
 
 File description:
 ---------
-cleaned_resources : In this folder there are all the RIRs datasets representing the ASNs spans reconstructed using the delegation files.
+cleaned_resources : In this folder there is a tar file "cleaned_datasets_rirs.tar.xz" that contains  all the RIRs datasets representing the ASNs spans reconstructed using the delegation files in csv format.
 
 final_datasets: This folder contains administrative_lifetimes.csv, a csv file with all the administrative lives of the ASNs.
 
@@ -18,7 +18,7 @@ close_final_resources.py: code to generate the final administrative lives datase
 
 **How to produce the administrative dataset:**
 
-1- Download the folder cleaned_resources.
+1- Download the folder cleaned_resources and untar "cleaned_datasets_rirs.tar.xz".
 
 2- Run close_span_per_rir.py.
 
