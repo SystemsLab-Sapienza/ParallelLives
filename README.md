@@ -15,6 +15,12 @@ remove_inner_span.py: code to remove inner allocations.
 
 close_final_resources.py: code to generate the final administrative lives dataset "administrative_lifetimes.csv".
 
+bgp_dataset_raw: In this folder there is the raw data for the bgp lives, "operational_lifetimes_raw.csv".
+
+bgp_dataset: In this folder there is the closed operational lifetimes of the ASNs, "operational_lifetimes.csv".
+
+bgp_close_span: code to generate the final operational lives dataset "operational_lifetimes.csv"
+
 
 **How to produce the administrative dataset:**
 
@@ -27,3 +33,9 @@ close_final_resources.py: code to generate the final administrative lives datase
 4- Run remove_inner_span.py
 
 4- Run close_final_resource.py.
+
+**How to produce the operational dataset:**
+
+1- Download the bgp_dataset_raw folder.
+
+2- Run bgp_close_span.py.
