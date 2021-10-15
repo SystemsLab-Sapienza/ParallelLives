@@ -1,41 +1,80 @@
 # The parallel lives of Autonomous Systems: ASN Allocations vs. BGP
-Additional material for paper "The parallel lives of Autonomous Systems: ASN Allocations vs. BGP", to appear in IMC ’21.
+Additional material for paper [The parallel lives of Autonomous Systems: ASN Allocations vs. BGP](https://www.cc.gatech.edu/~adainotti6/pubs/imc2021-231.parallel_lives.pdf),  to appear in IMC ’21.
 
-File description:
----------
-cleaned_resources : In this folder there is a tar file "cleaned_datasets_rirs.tar.xz" that contains  all the RIRs datasets representing the ASNs spans reconstructed using the delegation files in csv format.
-
-final_datasets: This folder contains administrative_lifetimes.csv, a csv file with all the administrative lives of the ASNs.
-
-close_span_per_RIR.py: code to apply the first step to build the administrative lives.
-
-implement_policy.py: code that implement the general policies of the RIRs to close the administrative lives.
-
-remove_inner_span.py: code to remove inner allocations.
-
-close_final_resources.py: code to generate the final administrative lives dataset "administrative_lifetimes.csv".
-
-bgp_dataset_raw: In this folder there is the raw data for the bgp lives, "operational_lifetimes_raw.csv".
-
-bgp_dataset: In this folder there is the closed operational lifetimes of the ASNs, "operational_lifetimes.csv".
-
-bgp_close_span: code to generate the final operational lives dataset "operational_lifetimes.csv"
+Authors:
+[@EugenioNemmi](https://github.com/EugenioNemmi), [@francescosassi](https://github.com/francescosassi), [@Ansijax](https://github.com/Ansijax), [@ctestart](https://github.com/ctestart), [@AlessandroMei](http://wwwusers.di.uniroma1.it/~mei/), [@albertodainotti](https://github.com/albertodainotti)
 
 
-**How to produce the administrative dataset:**
+If you use this dataset please cite:
 
-1- Download the folder cleaned_resources and untar "cleaned_datasets_rirs.tar.xz".
+```
+@inproceedings{nemmi2021parallel,
+  title={The parallel lives of Autonomous Systems: ASN Allocations vs. BGP},
+  author={Nemmi, Eugenio Nerio and Sassi, Francesco and La Morgia, Massimo and Testart, Cecilia and Dainotti, Alberto},
+  booktitle={ACM SIGCOMM Conference on Internet Measurement, IMC},
+  volume={21},
+  year={2021}
+}
+```
 
-2- Run close_span_per_rir.py.
+This repository contains the operational and administrative datasets used in the paper with the code to generate them.
 
-3- Run implement_policy.py
+## Data
 
-4- Run remove_inner_span.py
+The ```administrative_lifetimes.csv``` file contains the dataset of administrative lives. 
+Each row of this file contains::
+* **ASN**: the Autonomous System Number. 
+* **startdate**: the start date of the ASN's administrative life.
+* **enddate**: the end date of the ASN's administrative life.
+* **regDate**: the registration date of the ASN's administrative life.
+* **status**: the status of the resource. The possible statuses are: ```{available, allocated, reserved}```.
+* **registry**: The registry that the ASN has been assigned to. One of: ```{afrinic, apnic, arin, lacnic, ripencc}```.
 
-4- Run close_final_resource.py.
 
-**How to produce the operational dataset:**
+We also provide ```cleaned_datasets_rirs.tar.xz```, a more "raw" version of the dataset obtained by processing the delegation files after applying our restoration methodology.  This dataset is different from the previous one because it does not consider the RIRs policies. To produce the ```administrative_lifetimes.csv``` from this dataset you can run the scripts that apply the RIRs policies as described below.
 
-1- Download the bgp_dataset_raw folder.
+## Code
 
-2- Run bgp_close_span.py.
+**Steps to produce the administrative dataset**
+
+1. Extract the ```cleaned_datasets_rirs.tar.xz``` file that is inside the ```cleaned_resources``` folder.
+
+```
+tar -xvf cleaned_datasets_rirs.tar.xz
+```
+
+2. Run ```close_span_per_rir.py```. 
+
+```
+python3 close_span_per_rir.py
+```
+
+3. Run ```implement_policy.py```. 
+
+```
+python3 implement_policy.py
+```
+
+4. Run ```remove_inner_span.py```.
+
+```
+python3 remove_inner_span.py
+```
+
+5. Run ```close_final_resource.py```. 
+
+```
+python3 close_final_resource.py
+```
+
+This code generates the final administrative lives dataset: ```administrative_lifetimes.csv```. 
+
+**Steps to produce the operational dataset**
+
+1. Run ```bgp_close_span.py```
+
+```
+python3 bgp_close_span.py
+```
+
+This code takes as input the ```operational_lifetimes_raw.csv``` and produces the  ```operational_lifetimes.csv``` operational dataset merging all the operational lives of the same ASN that are closer than 30 days.
