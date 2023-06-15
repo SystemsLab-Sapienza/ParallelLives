@@ -129,6 +129,7 @@ class DBManager:
 
                         if row['startdate'] <= (record['enddate'] + datetime.timedelta(days=1)) or row['regDate'] == \
                                 record['last_reg'] or row['regDate'] == record['regDate']:
+                            record['enddate'] = row['enddate']
                             record['registry'] = row['registry']
                             record['last_reg'] = row['regDate']
 
